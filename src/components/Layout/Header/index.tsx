@@ -6,9 +6,6 @@ import { headerData } from "../Header/Navigation/menuData";
 import Logo from "./Logo";
 import HeaderLink from "../Header/Navigation/HeaderLink";
 import MobileHeaderLink from "../Header/Navigation/MobileHeaderLink";
-import Signin from "@/components/Auth/SignIn";
-import SignUp from "@/components/Auth/SignUp";
-import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 
@@ -17,8 +14,6 @@ const Header: React.FC = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [sticky, setSticky] = useState(false);
   const [activeHash, setActiveHash] = useState("");
-  const [signInOpen, setSignInOpen] = useState(false);
-  const [signUpOpen, setSignUpOpen] = useState(false);
 
   const handleScroll = () => {
     setSticky(window.scrollY >= 80);
@@ -32,7 +27,7 @@ const Header: React.FC = () => {
     };
 
     window.addEventListener("hashchange", handleHashChange);
-    handleHashChange(); // Set initial hash
+    handleHashChange();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -43,9 +38,8 @@ const Header: React.FC = () => {
   return (
     <>
       <header
-        className={`fixed top-0 z-40 w-full pb-5 transition-all duration-300 ${
-          sticky ? " shadow-lg bg-background pt-5" : "shadow-none pt-7"
-        }`}
+        className={`fixed top-0 z-40 w-full pb-5 transition-all duration-300 ${sticky ? " shadow-lg bg-background pt-5" : "shadow-none pt-7"
+          }`}
       >
         <div className="lg:py-0 py-2">
           <div className="container px-4 flex items-center justify-between">
@@ -65,18 +59,10 @@ const Header: React.FC = () => {
             <div className="lg:flex hidden gap-4 h-10">
               <Button
                 size="lg"
-                variant="outline"
-                onClick={() => setSignInOpen(true)}
-                className="bg-transparent border border-primary text-primary px-4 py-2 rounded-lg hover:bg-primary/10 hover:text-primary h-full transition-all duration-300"
+                render={<Link href="/#portfolio" />}
+                className="bg-primary text-[#FFFFFF] px-4 py-2 rounded-lg hover:bg-primary/80 hover:text-[#FFFFFF] h-full transition-all duration-300 font-medium"
               >
-                Sign In
-              </Button>
-              <Button
-                size="lg"
-                onClick={() => setSignUpOpen(true)}
-                className="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:bg-primary/80 hover:text-primary-foreground h-full transition-all duration-300 font-medium"
-              >
-                Sign Up
+                Explore More
               </Button>
             </div>
 
@@ -117,26 +103,12 @@ const Header: React.FC = () => {
                   ))}
                   <div className="mt-4 flex flex-col gap-4 w-full">
                     <Button
-                      variant="outline"
                       size="lg"
-                      onClick={() => {
-                        setNavbarOpen(false);
-                        setSignInOpen(true);
-                      }}
-                      className="w-full bg-transparent border border-primary text-primary rounded-lg hover:bg-primary/10 hover:text-primary"
+                      render={<Link href="/#portfolio" />}
+                      onClick={() => setNavbarOpen(false)}
+                      className="w-full bg-primary text-[#FFFFFF] rounded-lg hover:bg-primary/80 hover:text-[#FFFFFF] border border-primary font-medium"
                     >
-                      Sign In
-                    </Button>
-
-                    <Button
-                      size="lg"
-                      onClick={() => {
-                        setNavbarOpen(false);
-                        setSignUpOpen(true);
-                      }}
-                      className="w-full bg-primary text-primary-foreground rounded-lg hover:bg-primary/80 hover:text-primary-foreground border border-primary font-medium"
-                    >
-                      Sign Up
+                      Explore More
                     </Button>
                   </div>
                 </nav>
@@ -145,16 +117,6 @@ const Header: React.FC = () => {
           </div>
         </div>
       </header>
-      <Dialog open={signInOpen} onOpenChange={setSignInOpen}>
-        <DialogContent className="bg-background border-border max-w-md w-full overflow-y-auto max-h-screen">
-          <Signin />
-        </DialogContent>
-      </Dialog>
-      <Dialog open={signUpOpen} onOpenChange={setSignUpOpen}>
-        <DialogContent className="bg-background border-border max-w-md w-full overflow-y-auto max-h-screen">
-          <SignUp />
-        </DialogContent>
-      </Dialog>
     </>
   );
 };
